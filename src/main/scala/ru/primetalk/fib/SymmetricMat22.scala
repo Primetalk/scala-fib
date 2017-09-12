@@ -1,6 +1,7 @@
 package ru.primetalk.fib
 
-import algebra.ring.{AdditiveSemigroup, MultiplicativeSemigroup}
+import algebra.ring.MultiplicativeSemigroup
+import spire.algebra.Ring
 
 /** Condensed representation of a symmetric matrix 2x2 (a,b;b,c).
   * We just need to implement multiplication.
@@ -8,7 +9,7 @@ import algebra.ring.{AdditiveSemigroup, MultiplicativeSemigroup}
 case class SymmetricMat22[Number](a: Number, b: Number, c: Number)
 
 object SymmetricMat22 {
-  implicit def symmetricMat22IsMultiplicativeSemigroup[Number: MultiplicativeSemigroup: AdditiveSemigroup]: MultiplicativeSemigroup[SymmetricMat22[Number]] = new MultiplicativeSemigroup[SymmetricMat22[Number]] {
+  implicit def symmetricMat22IsMultiplicativeSemigroup[Number: Ring]: MultiplicativeSemigroup[SymmetricMat22[Number]] = new MultiplicativeSemigroup[SymmetricMat22[Number]] {
     import spire.syntax.numeric.{additiveSemigroupOps, multiplicativeSemigroupOps}
 
     /** Product of symmetric matrices is again symmetric. So we can use the same

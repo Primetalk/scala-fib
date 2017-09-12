@@ -11,9 +11,10 @@ object RecursiveFibonacci {
 
   /**
     * @tparam Number sufficient number representation
-    * @return
+    * @return n-th Fibonacci number
     */
   final def apply[Number: AdditiveAbGroup](n: Int)(f0: Number, f1: Number): Number = {
+    import spire.syntax.numeric.{additiveSemigroupOps, additiveGroupOps}
     type PosInt = Int
 
     @tailrec
@@ -21,7 +22,7 @@ object RecursiveFibonacci {
       case 0 => f0
       case 1 => f1
       case _ if n > 1 =>
-        apply0(n - 1)(f1, implicitly[AdditiveAbGroup[Number]].plus(f0, f1))
+        apply0(n - 1)(f1, f0 + f1)
     }
     n match {
       case _ if n >= 0 =>
@@ -29,7 +30,7 @@ object RecursiveFibonacci {
       case _ if (-n) % 2 == 0 =>
         apply0(-n)(f0, f1)
       case _ =>
-        implicitly[AdditiveAbGroup[Number]].negate(apply0(-n)(f0, f1))
+        - apply0(-n)(f0, f1)
     }
   }
 }
